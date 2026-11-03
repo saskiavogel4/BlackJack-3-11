@@ -45,3 +45,14 @@ Supabase setup checklist:
    `https://cgjqyuyobcgkavdjqtdh.supabase.co/auth/v1/callback`.
 3. **Authentication → URL Configuration**: set **Site URL** to the Netlify URL and add it
    (plus `http://localhost:8000` for local testing) to **Redirect URLs**.
+
+## Player profiles
+
+Signed-in players get a **My Profile** tab where they create and edit a profile
+(display name, unique @username, favorite card, short bio; their Google photo is used as the avatar).
+Clicking the greeting in the header also opens it.
+
+Data lives in the Supabase table `public.profiles` — see
+`supabase/migrations/20261103000000_create_profiles.sql`. Row Level Security lets players
+create, edit and delete only their own profile; signed-in players can view profiles,
+and signed-out visitors can't read any.

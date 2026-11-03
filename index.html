@@ -28,7 +28,55 @@
     </div>
   </header>
 
-  <main class="table">
+  <nav class="tabs hidden" id="tabs" role="tablist">
+    <button class="tab active" id="tab-play" role="tab" aria-selected="true" data-view="play-view">Play</button>
+    <button class="tab" id="tab-profile" role="tab" aria-selected="false" data-view="profile-view">My Profile</button>
+  </nav>
+
+  <section class="profile-page hidden" id="profile-view" role="tabpanel" aria-labelledby="tab-profile">
+    <div class="profile-card">
+      <div class="profile-head">
+        <img id="pf-avatar" class="avatar large" alt="" referrerpolicy="no-referrer" />
+        <div>
+          <h2 id="pf-title">Create your profile</h2>
+          <p class="muted" id="pf-email"></p>
+        </div>
+      </div>
+      <form id="profile-form" novalidate>
+        <label>Display name
+          <input id="pf-display-name" name="display_name" maxlength="40" required autocomplete="name" />
+        </label>
+        <label>Username
+          <div class="prefixed"><span>@</span>
+            <input id="pf-username" name="username" maxlength="20" required pattern="[a-z0-9_]{3,20}"
+                   autocomplete="username" autocapitalize="none" spellcheck="false" />
+          </div>
+          <small class="muted">3–20 characters: lowercase letters, numbers, underscores.</small>
+        </label>
+        <label>Favorite card
+          <select id="pf-favorite-card" name="favorite_card">
+            <option value="">— Pick one —</option>
+            <option>Ace of Spades</option><option>Ace of Hearts</option>
+            <option>Ace of Clubs</option><option>Ace of Diamonds</option>
+            <option>King of Spades</option><option>King of Hearts</option>
+            <option>Queen of Hearts</option><option>Jack of Diamonds</option>
+            <option>Ten of Clubs</option><option>Seven of Diamonds</option>
+          </select>
+        </label>
+        <label>Bio
+          <textarea id="pf-bio" name="bio" maxlength="160" rows="3" placeholder="Tell other players about yourself"></textarea>
+          <small class="muted"><span id="pf-bio-count">0</span>/160</small>
+        </label>
+        <div class="form-row">
+          <button type="submit" class="btn primary" id="pf-save">Create profile</button>
+          <span id="pf-status" class="form-status" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+      <p class="muted small-print" id="pf-dates"></p>
+    </div>
+  </section>
+
+  <main class="table" id="play-view" role="tabpanel" aria-labelledby="tab-play">
     <section class="hand-area">
       <h2>Dealer <span class="score" id="dealer-score"></span></h2>
       <div class="hand" id="dealer-hand"></div>
@@ -77,6 +125,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
   <script src="auth.js"></script>
+  <script src="profile.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

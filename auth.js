@@ -32,14 +32,20 @@
     span.textContent = text;
   }
 
+  window.bjAuth = { client, user: null };
+
   function render(user) {
+    const changed = (window.bjAuth.user && window.bjAuth.user.id) !== (user && user.id);
+    window.bjAuth.user = user;
+    if (changed) document.dispatchEvent(new CustomEvent('bj:auth', { detail: { user } }));
     el.login.classList.toggle('hidden', !!user);
     el.profile.classList.toggle('hidden', !user);
     if (!user) return;
 
     const meta = user.user_metadata || {};
     const fullName = meta.full_name || meta.name || user.email || 'Player';
-    el.name.textContent = fullName.split(' ')[0];
+    const profile = window.bjAuth.profile;
+    el.name.textContent = profile ? profile.display_name : fullName.split(' ')[0];
     el.profile.title = `Signed in as ${fullName}${user.email ? ` (${user.email})` : ''}`;
 
     const picture = meta.avatar_url || meta.picture;
@@ -54,6 +60,9 @@
       el.fallback.classList.remove('hidden');
     }
   }
+
+  // Re-render the greeting when the player saves their profile.
+  document.addEventListener('bj:profile', () => render(window.bjAuth.user));
 
   // If the profile picture can't load, show the initial instead.
   el.avatar.addEventListener('error', () => {
