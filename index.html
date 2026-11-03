@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blackjack</title>
+  <meta name="description" content="Blackjack built on the Deck of Cards API" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Blackjack</h1>
+    <div class="bank">
+      <span>Bankroll: <strong id="bankroll">$1000</strong></span>
+      <span class="shoe">Shoe: <strong id="remaining">–</strong> cards</span>
+    </div>
+  </header>
+
+  <main class="table">
+    <section class="hand-area">
+      <h2>Dealer <span class="score" id="dealer-score"></span></h2>
+      <div class="hand" id="dealer-hand"></div>
+    </section>
+
+    <div class="message" id="message" role="status" aria-live="polite">Place your bet to start.</div>
+
+    <section class="hand-area">
+      <h2>You <span class="score" id="player-score"></span></h2>
+      <div class="hand" id="player-hand"></div>
+    </section>
+
+    <section class="controls">
+      <div class="betting" id="betting">
+        <div class="bet-display">Bet: <strong id="bet">$0</strong></div>
+        <div class="chips">
+          <button class="chip c5" data-chip="5">5</button>
+          <button class="chip c25" data-chip="25">25</button>
+          <button class="chip c100" data-chip="100">100</button>
+          <button class="chip c500" data-chip="500">500</button>
+        </div>
+        <div class="row">
+          <button id="clear-bet" class="btn secondary">Clear</button>
+          <button id="deal" class="btn primary" disabled>Deal</button>
+        </div>
+      </div>
+
+      <div class="actions hidden" id="actions">
+        <button id="hit" class="btn">Hit</button>
+        <button id="stand" class="btn">Stand</button>
+        <button id="double" class="btn">Double</button>
+      </div>
+
+      <div class="actions hidden" id="next">
+        <button id="next-hand" class="btn primary">Next hand</button>
+      </div>
+
+      <button id="reset" class="btn link hidden">Out of money? Reset bankroll</button>
+    </section>
+  </main>
+
+  <footer>
+    Dealer stands on all 17s · Blackjack pays 3:2 · 6-deck shoe ·
+    Cards from <a href="https://deckofcardsapi.com" target="_blank" rel="noopener">Deck of Cards API</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
