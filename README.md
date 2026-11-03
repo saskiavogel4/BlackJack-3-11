@@ -31,3 +31,17 @@ python3 -m http.server 8000
 
 Connect the repo in Netlify (or drag the folder into Netlify Drop). No build command is needed —
 `netlify.toml` publishes the repository root.
+
+## Google sign-in (Supabase)
+
+`auth.js` signs players in with Google through Supabase Auth
+(project `cgjqyuyobcgkavdjqtdh`). Signed-in players see a greeting with their first name
+and Google profile picture. Signing in is optional — anyone can still play.
+
+Supabase setup checklist:
+
+1. **Authentication → Providers → Google**: enabled, with the Google OAuth client ID and secret.
+2. In Google Cloud Console, the OAuth client's authorized redirect URI is
+   `https://cgjqyuyobcgkavdjqtdh.supabase.co/auth/v1/callback`.
+3. **Authentication → URL Configuration**: set **Site URL** to the Netlify URL and add it
+   (plus `http://localhost:8000` for local testing) to **Redirect URLs**.
