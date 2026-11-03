@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blackjack</title>
   <meta name="description" content="Blackjack built on the Deck of Cards API" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="topbar">
-    <h1>Blackjack</h1>
+    <h1 class="logo"><span class="logo-suit" aria-hidden="true">♠</span>Blackjack</h1>
     <div class="auth" id="auth">
       <button id="login" class="btn google hidden" type="button">
         <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
@@ -23,8 +26,8 @@
       </div>
     </div>
     <div class="bank">
-      <span>Bankroll: <strong id="bankroll">$1000</strong></span>
-      <span class="shoe">Shoe: <strong id="remaining">–</strong> cards</span>
+      <div class="stat"><span class="stat-label">Bankroll</span><strong id="bankroll">$1000</strong></div>
+      <div class="stat"><span class="stat-label">Shoe</span><strong><span id="remaining">–</span> <small>cards</small></strong></div>
     </div>
   </header>
 
@@ -76,38 +79,46 @@
     </div>
   </section>
 
-  <main class="table" id="play-view" role="tabpanel" aria-labelledby="tab-play">
-    <section class="hand-area">
-      <h2>Dealer <span class="score" id="dealer-score"></span></h2>
-      <div class="hand" id="dealer-hand"></div>
-    </section>
+  <main class="play" id="play-view" role="tabpanel" aria-labelledby="tab-play">
+    <div class="felt">
+      <section class="hand-area dealer">
+        <h2>Dealer <span class="score" id="dealer-score"></span></h2>
+        <div class="hand" id="dealer-hand"></div>
+      </section>
 
-    <div class="message" id="message" role="status" aria-live="polite">Place your bet to start.</div>
+      <div class="table-rules" aria-hidden="true">
+        <span class="rule-big">Blackjack pays 3 to 2</span>
+        <span class="rule-small">Dealer must stand on all 17s</span>
+      </div>
 
-    <section class="hand-area">
-      <h2>You <span class="score" id="player-score"></span></h2>
-      <div class="hand" id="player-hand"></div>
-    </section>
+      <div class="message" id="message" role="status" aria-live="polite">Place your bet to start.</div>
+
+      <section class="hand-area player">
+        <div class="hand" id="player-hand"></div>
+        <h2>You <span class="score" id="player-score"></span></h2>
+      </section>
+
+      <div class="bet-spot" title="Your bet"><span class="bet-label">Bet</span><strong id="bet">$0</strong></div>
+    </div>
 
     <section class="controls">
       <div class="betting" id="betting">
-        <div class="bet-display">Bet: <strong id="bet">$0</strong></div>
         <div class="chips">
-          <button class="chip c5" data-chip="5">5</button>
-          <button class="chip c25" data-chip="25">25</button>
-          <button class="chip c100" data-chip="100">100</button>
-          <button class="chip c500" data-chip="500">500</button>
+          <button class="chip c5" data-chip="5" aria-label="Add $5">5</button>
+          <button class="chip c25" data-chip="25" aria-label="Add $25">25</button>
+          <button class="chip c100" data-chip="100" aria-label="Add $100">100</button>
+          <button class="chip c500" data-chip="500" aria-label="Add $500">500</button>
         </div>
         <div class="row">
-          <button id="clear-bet" class="btn secondary">Clear</button>
+          <button id="clear-bet" class="btn ghost">Clear</button>
           <button id="deal" class="btn primary" disabled>Deal</button>
         </div>
       </div>
 
       <div class="actions hidden" id="actions">
-        <button id="hit" class="btn">Hit</button>
-        <button id="stand" class="btn">Stand</button>
-        <button id="double" class="btn">Double</button>
+        <button id="hit" class="btn action">Hit</button>
+        <button id="stand" class="btn action">Stand</button>
+        <button id="double" class="btn action">Double</button>
       </div>
 
       <div class="actions hidden" id="next">
@@ -119,8 +130,7 @@
   </main>
 
   <footer>
-    Dealer stands on all 17s · Blackjack pays 3:2 · 6-deck shoe ·
-    Cards from <a href="https://deckofcardsapi.com" target="_blank" rel="noopener">Deck of Cards API</a>
+    6-deck shoe · Cards from <a href="https://deckofcardsapi.com" target="_blank" rel="noopener">Deck of Cards API</a>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
